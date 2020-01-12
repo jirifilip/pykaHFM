@@ -2,6 +2,17 @@ from collections import Counter
 import pandas as pd
 
 def load_knowledge_base_triples(csv_path, cols):
+    """Function for loading knowledge base triples from csv file
+    
+    Parameters
+    ----------
+    csv_path : path to csv file
+    cols : subject, predicate and object column names
+
+    Returns
+    -------
+    tuple of parsed knowledge base triples and new knowledge base
+    """
 
     knowledge_base_data = pd.read_csv(csv_path)
     knowledge_base_data["genre"] = "genre"

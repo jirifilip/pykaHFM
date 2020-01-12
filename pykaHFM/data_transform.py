@@ -2,6 +2,18 @@ import numpy as np
 
 
 class DataTransformer:
+    """DataTransformer is a utility class for transforming
+    user item matrix to a data structure more suited for a
+    factorization machine
+    
+
+    Parameters
+    ----------
+    users: array of users
+    items: array of items
+    x_matrix: user items matrix
+
+    """
 
     def __init__(self, users, items, x_matrix):
         self.users = users
