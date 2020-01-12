@@ -1,0 +1,3 @@
+# pykaHFM
+
+Implementace algoritmu kaHFM.

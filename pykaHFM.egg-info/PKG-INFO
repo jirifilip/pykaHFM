@@ -1,0 +1,14 @@
+Metadata-Version: 2.1
+Name: pykaHFM
+Version: 0.2.1
+Summary: An implementation of kaHFM algorithm
+Home-page: https://github.com/jirifilip/pykaHFM
+Author: Jiří Filip
+Author-email: j.f.ilip@seznam.cz
+License: UNKNOWN
+Description: #pykaHFM
+        
+        Implementace algoritmu kaHFM.
+Keywords: pykaHFM
+Platform: UNKNOWN
+Description-Content-Type: text/markdown
