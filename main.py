@@ -5,7 +5,7 @@ from collections import Counter
 from pykaHFM import TFIDFTransformer, FactorizationMachine, StochasticGradientDescent, load_knowledge_base_triples
 
 
-knowledge_base_sparql_triples, knowledge_base_new = load_knowledge_base_triples("c:/Users/jfili/Downloads/sparql (4)", ["movie", "subject"])
+knowledge_base_sparql_triples, knowledge_base_new = load_knowledge_base_triples("data/movie_knowledge_base.csv", ["movie", "subject"])
 
 movies = list(set([subj for subj, *_ in knowledge_base_sparql_triples]))
 users = [ "user{}".format(idx) for idx in range(4) ]

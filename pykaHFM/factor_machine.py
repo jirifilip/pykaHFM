@@ -3,6 +3,10 @@ import numpy as np
 from .data_transform import DataTransformer
 
 class FactorizationMachine:
+    """
+    A Factorization Machine class 
+    
+    """
     
     def __init__(self, users, items, y, v_matrix):
         self.users = users
