@@ -20,10 +20,10 @@ tfidf.generate_v_matrix()
 
 
 fm = FactorizationMachine(users, movies, user_movie_matrix, tfidf.v_matrix)
-fm.build_training_data()
-
 
 sgd = StochasticGradientDescent(fm, iterations=10, learning_rate=0.0001)
 loss1 = sgd.fit()
 
-print(loss1)
+Y_hat = fm.predict_all()
+
+print(Y_hat)

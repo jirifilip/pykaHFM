@@ -1,5 +1,37 @@
 import numpy as np
 
+
+class DataTransformer:
+
+    def __init__(self, users, items, x_matrix):
+        self.users = users
+        self.items = items
+        self.x_matrix = x_matrix
+
+    def transform(self):
+        n_users = len(self.users)
+        n_items = len(self.items)
+
+        target_matrix = np.zeros(shape=(n_users * n_items, n_users + n_items))
+        target_matrix_y = np.zeros(n_users * n_items)
+
+        row_counter = 0
+        for user_idx, user in enumerate(self.users):
+            for item_idx, item in enumerate(self.items):
+                target_matrix[row_counter, user_idx] = 1
+                target_matrix[row_counter, (n_users - 1) + item_idx] = 1
+
+                target_matrix_y[row_counter] = self.x_matrix[user_idx, item_idx]
+                
+                row_counter += 1
+
+
+        self.data_x = target_matrix
+        self.data_y = target_matrix_y
+
+        return self.data_x, self.data_y
+
+
 class TFIDFTransformer:
     
     def __init__(self, knowledge_base_triples, x_matrix, user_names, item_names):

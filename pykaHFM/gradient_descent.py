@@ -2,7 +2,7 @@ import numpy as np
 
 class StochasticGradientDescent:
     
-    def __init__(self, factorization_machine, iterations=500, learning_rate=0.01):
+    def __init__(self, factorization_machine, iterations=500, learning_rate=0.0001):
         self.factorization_machine = factorization_machine
         self.learning_rate = learning_rate
         self.iterations = iterations
@@ -33,19 +33,6 @@ class StochasticGradientDescent:
             bias_gradient *= loss_MSE
             w_gradient *= loss_MSE
             v_gradient *= loss_MSE
-            
-            """
-            print("b grad", bias_gradient)
-            print("w grad", w_gradient)
-            print("v grad", v_gradient)
-            """
-            
-            """
-            print("b", self.factorization_machine.w_bias)
-            print("w", self.factorization_machine.w_pars)
-            print("v", self.factorization_machine.v_matrix)
-            """
-            
             
             print("loss MSE", loss_MSE)
             loss_data.append(loss_MSE)

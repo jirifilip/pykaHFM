@@ -1,5 +1,7 @@
 import numpy as np
 
+from .data_transform import DataTransformer
+
 class FactorizationMachine:
     
     def __init__(self, users, items, y, v_matrix):
@@ -9,8 +11,8 @@ class FactorizationMachine:
         self.n_items = len(items)
         self.y = y
         
-        self.training_data = None
-        self.training_y = None
+        self.data_transformer = DataTransformer(users, items, y)
+        self.training_data, self.training_y = self.data_transformer.transform()
         
         self.w_bias = np.random.normal()
         self.w_pars = np.random.normal(size=self.n_users + self.n_items)
@@ -18,28 +20,6 @@ class FactorizationMachine:
         
         
     
-    def build_training_data(self):
-        n_users = len(self.users)
-        n_items = len(self.items)
-
-        target_matrix = np.zeros(shape=(n_users * n_items, n_users + n_items))
-        target_matrix_y = np.zeros(n_users * n_items)
-
-        row_counter = 0
-        for user_idx, user in enumerate(self.users):
-            for item_idx, item in enumerate(self.items):
-                target_matrix[row_counter, user_idx] = 1
-                target_matrix[row_counter, (n_users - 1) + item_idx] = 1
-
-                target_matrix_y[row_counter] = self.y[user_idx, item_idx]
-                
-                row_counter += 1
-
-
-        self.training_data = target_matrix
-        self.training_y = target_matrix_y
-        
-        
     def predict(self, user_idx, item_idx):
         n = self.training_data.shape[0]
         n_users = len(self.users)
@@ -48,7 +28,20 @@ class FactorizationMachine:
         x_hat = self.w_bias + self.w_pars[user_idx] + self.w_pars[n_users + item_idx] + self.v_matrix[user_idx, :]@self.v_matrix[user_idx + item_idx, :].T
         
         return x_hat
+
+    def predict_all(self):
+        n = self.training_data.shape[0]
+        n_users = len(self.users)
+        n_items = len(self.items)
+
+        X_hat = np.zeros_like(self.y)
+        for user_idx in range(n_users):
+            for item_idx in range(n_items):
+                x_hat = self.predict(user_idx, item_idx)
     
+                X_hat[user_idx, item_idx] = x_hat
+
+        return X_hat
     
     def loss_MSE(self):
         
@@ -84,16 +77,6 @@ class FactorizationMachine:
                 
                 grad_sum = np.dot(self.v_matrix[:, feature_idx], x_input) - np.dot(self.v_matrix[:, feature_idx], x_i_vector)
                 
-                """
-                for idx_j in range(n):
-                    v_j_f = self.v_matrix[idx_j, feature_idx]
-                    x_j = x_input[idx_j]
-                    
-                    v_i_f = self.v_matrix[idx_i, feature_idx]
-                    
-                    grad_sum += v_j_f * x_j - v_i_f * x_i**2
-                """   
-                   
                 v_grad = x_i * grad_sum
                 v_gradients[idx_i, feature_idx] = -v_grad
         
